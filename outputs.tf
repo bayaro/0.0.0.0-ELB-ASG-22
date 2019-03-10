@@ -1,5 +1,9 @@
-output "security_group" {
-  value = "${aws_security_group.default.id}"
+output "asg_security_group" {
+  value = "${aws_security_group.asg_sg.id}"
+}
+
+output "elb_security_group" {
+  value = "${aws_security_group.elb_sg.id}"
 }
 
 output "launch_configuration" {

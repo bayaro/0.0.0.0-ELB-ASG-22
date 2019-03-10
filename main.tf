@@ -24,6 +24,8 @@ resource "aws_elb" "web-elb" {
     target              = "HTTP:80/"
     interval            = 30
   }
+
+  security_groups = ["${aws_security_group.elb_sg.id}"]
 }
 
 resource "aws_autoscaling_group" "web-asg" {
@@ -49,19 +51,16 @@ resource "aws_launch_configuration" "web-lc" {
   image_id      = "${lookup(var.aws_amis, var.aws_region)}"
   instance_type = "${var.instance_type}"
 
-  # Security group
-  security_groups = ["${aws_security_group.default.id}"]
+  security_groups = ["${aws_security_group.asg_sg.id}"]
   user_data       = "${file("userdata.sh")}"
   key_name        = "${var.key_name}"
 }
 
-# Our default security group to access
-# the instances over SSH and HTTP
-resource "aws_security_group" "default" {
-  name        = "terraform_example_sg"
-  description = "Used in the terraform"
+resource "aws_security_group" "asg_sg" {
+  name        = "asg_sg"
+  description = "the ASG instances access over 22 port from the ELB points"
 
-  # SSH access from anywhere
+  # SSH access from anywhere # TODO from only ELB nodes
   ingress {
     from_port   = 22
     to_port     = 22
@@ -69,10 +68,23 @@ resource "aws_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # HTTP access from anywhere
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "elb_sg" {
+  name        = "elb_sg"
+  description = "the ELB points access over 22 port from anywhere"
+
+  # SSH access from anywhere
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
