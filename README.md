@@ -1,32 +1,39 @@
-# ASG example
+## 0.0.0.0 - ELB - ASG test task
 
-This example shows how to launch instances using Auto Scaling Groups.
+In this test task Terraform the code implemented which deploys an EC2 instance that
+running within ASG with ELB in front of it. This instance, through *classic* ELB,
+shares port 22 (SSH, configurable in Terraform, but was not for sshd) to the Internet.
 
-This creates a security group, launch configuration, auto scaling group and an ELB. The user data for launch configuration installs nginx and it listens on port 80.
+This creates two security groups, a launch configuration, an auto scaling group and an ELB.
+The user data for launch configuration does nothing.
 
-The example uses latest Ubuntu AMIs.
+The example uses *ubuntu-trusty-14.04 (x64)* AMI.
 
-Make sure you change the list of availability zones that is applicable to your account and region.
+*us-east-1* AWS region is used.
 
-To run, configure your AWS provider as described in https://www.terraform.io/docs/providers/aws/index.html
+To run, [configure your AWS provider](https://www.terraform.io/docs/providers/aws/index.html)
 
-Running the example
+## Running the example
 
-For planning phase 
-
-```
-terraform plan -var 'key_name={your_key_name}'
-```
-
-For apply phase
+### For planning phase 
 
 ```
-terraform apply -var 'key_name={your_key_name}'
+terraform plan
 ```
-Once the stack is created, wait for few minutes and test the stack by launching a browser with ELB url.
 
-To remove the stack
+### For apply phase
 
 ```
- terraform destroy -var 'key_name={your_key_name}'
+terraform apply
 ```
+Once the stack is created, wait for few minutes and test the stack by any ssh client.
+Access to the instance should be available only throw ELB.
+
+### To remove the stack
+
+```
+ terraform destroy
+```
+
+## Source
+This implemtation is based on [Terraform Provider AWS. ASG Example](https://github.com/terraform-providers/terraform-provider-aws/tree/master/examples/asg)
