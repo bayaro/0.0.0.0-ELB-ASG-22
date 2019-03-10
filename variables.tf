@@ -1,6 +1,5 @@
 variable "aws_profile" {
     description = "The AWS local profile name to use to access the AWS environment."
-    default = "npe"
 }
 
 variable "aws_region" {
