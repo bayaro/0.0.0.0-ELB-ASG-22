@@ -56,16 +56,31 @@ resource "aws_launch_configuration" "web-lc" {
   key_name        = "${var.key_name}"
 }
 
+# collect all vpcs
+data "aws_vpcs" "all" {}
+
+# collect all subnets from all vpc ids
+data "aws_subnet_ids" "all" {
+  count = "${length(data.aws_vpcs.all.ids)}"
+  vpc_id = "${element(data.aws_vpcs.all.ids, count.index)}"
+}
+
+# collect all subnets
+data "aws_subnet" "all" {
+  count = "${length(data.aws_subnet_ids.all.ids)}"
+  id    = "${data.aws_subnet_ids.all.ids[count.index]}"
+}
+
 resource "aws_security_group" "asg_sg" {
   name        = "asg_sg"
   description = "the ASG instances access over 22 port from the ELB points"
 
-  # SSH access from anywhere # TODO from only ELB nodes
+  # SSH access from ELB nodes only
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${data.aws_subnet.all.*.cidr_block}"]
   }
 
   # outbound internet access
