@@ -27,7 +27,7 @@ terraform plan
 terraform apply
 ```
 Once the stack is created, wait for few minutes and test the stack by any ssh client.
-Access to the instance should be available only throw ELB.
+Access to the instance should be available only through ELB.
 
 ### To remove the stack
 
