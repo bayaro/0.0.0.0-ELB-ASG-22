@@ -1,16 +1,16 @@
 #
 
-15:58 - Init this test git repository
+**15:58** - Init this test git repository
 
-16:00 - AWS Account registration
+**16:00** - AWS Account registration
 
-16:10 - Terraform introduction
-    https://www.google.com/search?q=terraform
-    https://www.terraform.io/
-    https://www.terraform.io/intro/index.html
+**16:10** - Terraform introduction
+- [x] https://www.google.com/search?q=terraform
+- [x] https://www.terraform.io/
+- [x] https://www.terraform.io/intro/index.html
 
-16:13 - Installing (https://learn.hashicorp.com/terraform/getting-started/install.html)
-    https://www.terraform.io/downloads.html
+**16:13** - Installing (https://learn.hashicorp.com/terraform/getting-started/install.html)
+- [x] https://www.terraform.io/downloads.html
 
 ```
 mkdir tmp
@@ -29,37 +29,37 @@ cd ..
 rm -rf tmp
 ```
 
-16:23 - mail from AWS about created account
-    Logged in
-    Creating non-root user with only a 'Programmatic access' to test the terraform configuration
-    At beggining to avoid time spending for user access and permissions boundary configuration
-    the 'Administrators' group with full access created for the user and no any permissions
-    boundary created.
+**16:23** - mail from AWS about created account
+- [x] Logged in
+- [x] Creating non-root user with only a 'Programmatic access' to test the terraform configuration
+- [x] At beggining to avoid time spending for user access and permissions boundary configuration
+- [x] the 'Administrators' group with full access created for the user and no any permissions
+- [x] boundary created.
 
-16:30 - saving user AWS credentials in a proper place ;)
-    user access testing
+**16:30** - saving user AWS credentials in a proper place ;)
+- [x] user access testing
 ```
 16:46@debian .../sites/npe$ aws --profile npe sts get-caller-identity
 {
-    "Account": "123456789012",
-    "UserId": "AIDXXXXXXXXXXXXXXXXXXX",
-    "Arn": "arn:aws:iam::123456789012:user/npe"
+- [x] "Account": "123456789012",
+- [x] "UserId": "AIDXXXXXXXXXXXXXXXXXXX",
+- [x] "Arn": "arn:aws:iam::123456789012:user/npe"
 }
 ```
 
-    weekend :) pause for childcare.
+- [x] weekend :) pause for childcare.
 
-17:47 - continue with Terraform introduction
+**17:47** - continue with Terraform introduction
 	https://www.terraform.io/intro/examples/index.html
-    https://www.terraform.io/intro/examples/aws.html
+- [x] https://www.terraform.io/intro/examples/aws.html
 	https://github.com/terraform-providers/terraform-provider-aws/tree/master/examples/two-tier
 
 	git clone https://github.com/terraform-providers/terraform-provider-aws.git
 
-17:45 - configure the AWS provider as described in
+**17:45** - configure the AWS provider as described in
 	https://www.terraform.io/docs/providers/aws/index.html
 
-    'Shared Credentials file' will be used
+- [x] 'Shared Credentials file' will be used
 
 ```
 17:46@debian .../sites/npe$ ./terraform plan
@@ -107,25 +107,25 @@ var.key_name
 ...
 ```
 
-18:02 - the configiuration clarification and terraform plan & apply action testing
+**18:02** - the configiuration clarification and terraform plan & apply action testing
 
-18:39 - completing AWS registration
+**18:39** - completing AWS registration
 
-18:43 - continue with the test task
+**18:43** - continue with the test task
 
-19:11 - the test example configuration applied
-    the ubuntu server public IP - X.X.X.X. Port 80 is accessable
-    the ELB domain terraform-example-elb-123456789012.us-east-1.elb.amazonaws.com.
-        Port 80 is accessable
+**19:11** - the test example configuration applied
+- [x] the ubuntu server public IP - X.X.X.X. Port 80 is accessable
+- [x] the ELB domain terraform-example-elb-123456789012.us-east-1.elb.amazonaws.com.
+- [x]     Port 80 is accessable
 
-19:15 - real configuration
-    see details in commits
+**19:15** - real configuration
+- [x] see details in commits
 
-21:24 - clear environment & last start test
-21:41 - + notification about classic ELB available ports
+**21:24** - clear environment & last start test
+**21:41** - + notification about classic ELB available ports
 
 
-21:45 - github repository creation
-    README.md finalization
+**21:45** - github repository creation
+- [x] README.md finalization
 
-22:26 - this file is finished.
+**22:26** - this file is finished.
