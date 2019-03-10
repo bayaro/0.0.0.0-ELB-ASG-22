@@ -13,7 +13,12 @@ resource "aws_elb" "web-elb" {
   listener {
     instance_port     = 22
     instance_protocol = "tcp"
+    # I don't know who is so cleave, but we can't __create__ classic ELB
+    # that translate port other then 25, 80, 443, 465, 587 or 1024~65535 inclusive.
+    # But ))) we can change it after creation. So, please toggle commenting of two
+    # below lines before first creation and after a first applying return it back.
     lb_port           = 22
+    #lb_port           = 443
     lb_protocol       = "tcp"
   }
 
