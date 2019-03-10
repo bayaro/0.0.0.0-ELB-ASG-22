@@ -1,5 +1,5 @@
 variable "aws_profile" {
-    description = "The AWS local profile name to use to access the AWS environment."
+    description = "The AWS profile local name to use to access the AWS environment."
 }
 
 variable "aws_region" {
@@ -7,11 +7,18 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+# NB!!!!!!!!!!!
+# The configuration is used only during AWS configuration by Terraform.
+# The sshd configuration (in user_data launch configuration) does not implemented.
+variable "open_port" {
+  description = "The port number that should be translated through ELB to the ASG instances."
+  default     = "22"
+}
+
 # ubuntu-trusty-14.04 (x64)
 variable "aws_amis" {
   default = {
     "us-east-1" = "ami-5f709f34"
-    "us-west-2" = "ami-7f675e4f"
   }
 }
 

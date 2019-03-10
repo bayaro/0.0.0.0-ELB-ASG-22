@@ -11,13 +11,13 @@ resource "aws_elb" "web-elb" {
   availability_zones = ["${split(",", var.availability_zones)}"]
 
   listener {
-    instance_port     = 22
+    instance_port     = "${var.open_port}"
     instance_protocol = "tcp"
     # I don't know who is so cleave, but we can't __create__ classic ELB
     # that translate port other then 25, 80, 443, 465, 587 or 1024~65535 inclusive.
     # But ))) we can change it after creation. So, please toggle commenting of two
     # below lines before first creation and after a first applying return it back.
-    lb_port           = 22
+    lb_port           = "${var.open_port}"
     #lb_port           = 443
     lb_protocol       = "tcp"
   }
@@ -26,7 +26,7 @@ resource "aws_elb" "web-elb" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "TCP:22"
+    target              = "TCP:${var.open_port}"
     interval            = 30
   }
 
@@ -78,12 +78,12 @@ data "aws_subnet" "all" {
 
 resource "aws_security_group" "asg_sg" {
   name        = "asg_sg"
-  description = "the ASG instances access over 22 port from the ELB points"
+  description = "the ASG instances access over ${var.open_port} port from the ELB points"
 
   # SSH access from ELB nodes only
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = "${var.open_port}"
+    to_port     = "${var.open_port}"
     protocol    = "tcp"
     cidr_blocks = ["${data.aws_subnet.all.*.cidr_block}"]
   }
@@ -99,12 +99,12 @@ resource "aws_security_group" "asg_sg" {
 
 resource "aws_security_group" "elb_sg" {
   name        = "elb_sg"
-  description = "the ELB points access over 22 port from anywhere"
+  description = "the ELB points access over ${var.open_port} port from anywhere"
 
   # SSH access from anywhere
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = "${var.open_port}"
+    to_port     = "${var.open_port}"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
